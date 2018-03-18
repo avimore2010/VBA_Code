@@ -1,0 +1,35 @@
+Private Sub CommandButton1_Click()
+        Dim PuttyPID As Double, PuttyHwnd As Long
+        Dim serverName As String, username As String, password As String
+        Dim user As String
+        Dim Location As String
+        
+        serverName = "XYZ"
+        username = "abcd"
+        password = "******"
+    
+        'PuttyPID = Shell("C:\Program Files\PuTTY\putty.exe -ssh " & serverName, vbNormalFocus)   'CHANGE PATH TO .EXE
+        'C:\Users\amore\Desktop
+        user = Environ$("Username")
+        Location = "C:\Users\" + user + "\Desktop\putty.exe -ssh "
+        MsgBox (Location)
+        PuttyPID = Shell(Location & serverName, vbNormalFocus)
+        'PuttyPID = Shell("C:\Users\amore\Desktop\putty.exe -ssh " & serverName, vbNormalFocus)
+        'Get window handle of the PuTTY Telnet command window
+
+        PuttyHwnd = GetWindowHandle(CLng(PuttyPID))
+        'MsgBox (PuttyHwnd)
+        Application.Wait (Now + TimeValue("0:00:5"))
+        If PuttyHwnd >= 0 Then
+    
+            SendChars PuttyHwnd, username & vbCr
+            Application.Wait DateAdd("s", 1, Now)
+    
+            SendChars PuttyHwnd, password & vbCr
+            Application.Wait DateAdd("s", 1, Now)
+    
+            'SendChars PuttyHwnd, "DIR" & vbCr  'DIR command
+    
+        End If
+
+End Sub
