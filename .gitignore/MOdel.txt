@@ -1,0 +1,130 @@
+
+
+MOdel 2 code 
+
+Private Const WM_CHAR As Long = &H102
+Private Const WM_KEYDOWN As Long = &H100
+Private Const GW_HWNDNEXT = 2
+
+Private Declare PtrSafe Function FindWindow Lib "user32" Alias "FindWindowA" _
+    (ByVal lpClassName As String, ByVal lpWindowName As String) As Long
+    
+Private Declare PtrSafe Function GetParent Lib "user32" _
+    (ByVal hwnd As Long) As Long
+    
+Private Declare PtrSafe Function GetWindow Lib "user32" _
+    (ByVal hwnd As Long, ByVal wCmd As Long) As Long
+        
+Private Declare PtrSafe Function GetWindowThreadProcessId Lib "user32" _
+    (ByVal hwnd As Long, lpdwProcessId As Long) As Long
+
+Private Declare PtrSafe Function PostMessage Lib "user32" Alias "PostMessageA" _
+    (ByVal hwnd As Long, ByVal wMsg As Long, ByVal wParam As Long, ByVal lParam As Long) As Long
+
+
+Public Sub SendChars(hwnd As Long, sChars As String)
+    Dim i As Long
+    Dim ret As Long
+    
+    For i = 1 To Len(sChars)
+        ret = PostMessage(hwnd, WM_CHAR, Asc(Mid(sChars, i, 1)), 0&)
+    Next
+End Sub
+
+Public Function GetWindowHandle(hInstance As Long) As Long
+    Dim tempHwnd As Long
+    
+    ' Grab the first window handle that Windows finds:
+    tempHwnd = FindWindow(vbNullString, vbNullString)
+    
+    ' Loop until you find a match or there are no more window handles:
+    Do Until tempHwnd = 0
+        ' Check if no parent for this window
+        If GetParent(tempHwnd) = 0 Then
+            ' Check for PID match
+            If hInstance = ProcIDFromWnd(tempHwnd) Then
+                ' Return found handle
+                GetWindowHandle = tempHwnd
+                ' Exit search loop
+                Exit Do
+            End If
+        End If
+        
+        ' Get the next window handle
+        tempHwnd = GetWindow(tempHwnd, GW_HWNDNEXT)
+    Loop
+End Function
+
+Private Function ProcIDFromWnd(ByVal hwnd As Long) As Long
+    Dim idProc As Long
+    
+    ' Get PID for this HWnd
+    GetWindowThreadProcessId hwnd, idProc
+    
+    ' Return PID
+    ProcIDFromWnd = idProc
+End Function
+
+
+Private Const WM_CHAR As Long = &H102
+Private Const WM_KEYDOWN As Long = &H100
+Private Const GW_HWNDNEXT = 2
+
+Private Declare PtrSafe Function FindWindow Lib "user32" Alias "FindWindowA" _
+    (ByVal lpClassName As String, ByVal lpWindowName As String) As Long
+    
+Private Declare PtrSafe Function GetParent Lib "user32" _
+    (ByVal hwnd As Long) As Long
+    
+Private Declare PtrSafe Function GetWindow Lib "user32" _
+    (ByVal hwnd As Long, ByVal wCmd As Long) As Long
+        
+Private Declare PtrSafe Function GetWindowThreadProcessId Lib "user32" _
+    (ByVal hwnd As Long, lpdwProcessId As Long) As Long
+
+Private Declare PtrSafe Function PostMessage Lib "user32" Alias "PostMessageA" _
+    (ByVal hwnd As Long, ByVal wMsg As Long, ByVal wParam As Long, ByVal lParam As Long) As Long
+
+
+Public Sub SendChars(hwnd As Long, sChars As String)
+    Dim i As Long
+    Dim ret As Long
+    
+    For i = 1 To Len(sChars)
+        ret = PostMessage(hwnd, WM_CHAR, Asc(Mid(sChars, i, 1)), 0&)
+    Next
+End Sub
+
+Public Function GetWindowHandle(hInstance As Long) As Long
+    Dim tempHwnd As Long
+    
+    ' Grab the first window handle that Windows finds:
+    tempHwnd = FindWindow(vbNullString, vbNullString)
+    
+    ' Loop until you find a match or there are no more window handles:
+    Do Until tempHwnd = 0
+        ' Check if no parent for this window
+        If GetParent(tempHwnd) = 0 Then
+            ' Check for PID match
+            If hInstance = ProcIDFromWnd(tempHwnd) Then
+                ' Return found handle
+                GetWindowHandle = tempHwnd
+                ' Exit search loop
+                Exit Do
+            End If
+        End If
+        
+        ' Get the next window handle
+        tempHwnd = GetWindow(tempHwnd, GW_HWNDNEXT)
+    Loop
+End Function
+
+Private Function ProcIDFromWnd(ByVal hwnd As Long) As Long
+    Dim idProc As Long
+    
+    ' Get PID for this HWnd
+    GetWindowThreadProcessId hwnd, idProc
+    
+    ' Return PID
+    ProcIDFromWnd = idProc
+End Function
