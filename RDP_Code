@@ -1,0 +1,18 @@
+Sub Button2_Click()
+
+Dim WSHShell
+
+Set WSHShell = CreateObject("WScript.Shell")
+WSHShell.Run "mstsc"
+Application.Wait (Now + TimeValue("0:00:2"))
+WSHShell.AppActivate "Remote Desktop Connection"
+Application.Wait (Now + TimeValue("0:00:2"))
+WSHShell.SendKeys "LP-IND-PUN-11"
+Application.Wait (Now + TimeValue("0:00:2"))
+WSHShell.SendKeys "{TAB}"
+Application.Wait (Now + TimeValue("0:00:2"))
+WSHShell.SendKeys "{ENTER}"
+
+
+
+End Sub
