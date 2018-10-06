@@ -1,0 +1,17 @@
+Private Declare PtrSafe Function MsgBoxTimeout _
+        Lib "user32" _
+        Alias "MessageBoxTimeoutA" ( _
+            ByVal hwnd As LongPtr, _
+            ByVal lpText As String, _
+            ByVal lpCaption As String, _
+            ByVal wType As VbMsgBoxStyle, _
+            ByVal wlange As Long, _
+            ByVal dwTimeout As Long) _
+    As Long
+    
+Private Sub CommandButton2_Click()
+    Dim Location As String
+    Location = "C:\Users\" + user + "\Desktop\putty.exe -ssh " ' message disply in box
+    'MsgBox (Location)
+    Call MsgBoxTimeout(0, Location + " Popup Window Close in 4 sec", "SSGCROP", vbInformation, 0, 4000)
+End Sub
