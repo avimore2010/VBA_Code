@@ -1,0 +1,19 @@
+Private Sub CommandButton3_Click()
+    Dim x
+    Dim Path As String
+
+    ' Set the Path variable equal to the path of your program's installation
+    Path = "C:\Program Files (x86)\VMware\Infrastructure\Virtual Infrastructure Client\Launcher\VpxClient.exe"
+    x = Shell(Path, vbNormalFocus)
+    Application.Wait (Now + TimeValue("0:00:2"))
+    SendKeys "{TAB}"
+    SendKeys "{TAB}"
+    SendKeys "{TAB}"
+    SendKeys "{TAB}"
+    SendKeys "{TAB}"
+    Application.Wait (Now + TimeValue("0:00:1"))
+    SendKeys "10.100.41.20"
+    Application.Wait (Now + TimeValue("0:00:2"))
+    'MsgBox (Path)
+    
+End Sub
