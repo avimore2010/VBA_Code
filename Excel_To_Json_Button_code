@@ -1,0 +1,40 @@
+Private Sub CommandButton1_Click()
+Dim excelRange As Range
+Dim jsonItems As New Collection
+Dim jsonDictionary As New Dictionary
+Dim jsonDictionary1 As New Dictionary
+Dim jsonFileObject As New FileSystemObject
+Dim jsonFileExport As TextStream
+Dim i As Long
+Dim cell As Variant
+'Dim f As String
+'f = False
+
+Set excelRange = Cells(1, 1).CurrentRegion
+ 'MsgBox "excelRange" & excelRange, vbInformation
+For i = 2 To excelRange.Rows.Count
+'Define logic According to your Excel file
+    jsonDictionary("type") = "Host"
+    'jsonDictionary("Public_IP") = Cells(i, 2)
+    jsonDictionary("value") = Cells(i, 5) '-- 5
+    jsonDictionary("overridable") = False
+    jsonDictionary("description") = Cells(i, 3) + "-Private IP Address"
+    jsonDictionary("name") = Cells(i, 3) + "-Private" ' --3
+    jsonDictionary1("type") = "Host"
+    jsonDictionary1("value") = Cells(i, 4) '-- 5
+    jsonDictionary1("overridable") = False
+    jsonDictionary1("description") = Cells(i, 3) + "-Public IP Address"
+    jsonDictionary1("name") = Cells(i, 3) + "-Public" ' --3
+    
+    jsonItems.Add jsonDictionary1
+    Set jsonDictionary1 = Nothing
+    jsonItems.Add jsonDictionary
+    Set jsonDictionary = Nothing
+    i = i + 1
+Next
+
+'MsgBox ConvertToJson(jsonItems, Whitespace:=3)
+'change the path below to save where you desire
+Set jsonFileExport = jsonFileObject.CreateTextFile("C:\Users\amore\Desktop\jsonExample1.json", True)
+jsonFileExport.WriteLine (ConvertToJson(jsonItems, Whitespace:=3))
+End Sub
