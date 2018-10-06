@@ -1,0 +1,12 @@
+
+Private Sub CommandButton4_Click()
+
+
+Set objShell = CreateObject("WScript.Shell") ' Create object of Shell
+    objShell.Run "CMD /K" ' Open Command mode
+     'Wscript.Sleep (200) ' Wait for 200 milli-seconds
+     Application.Wait (Now + TimeValue("0:00:2")) ' Wait for 2 seconds
+     objShell.SendKeys ("python C:\Users\amore\Desktop\try1\Vba_Test.py")  ' Type CD \ in command mode
+     Application.Wait (Now + TimeValue("0:00:2")) ' Wait for 2 seconds ~ (tilde)
+     objShell.SendKeys "~"
+End Sub
